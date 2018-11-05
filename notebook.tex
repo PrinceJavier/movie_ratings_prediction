@@ -1,0 +1,2585 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Javier\_ml regression\_movie rating prediction}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Predicting Movie Ratings and Income from Social Media
+Features}\label{predicting-movie-ratings-and-income-from-social-media-features}
+
+    \textbf{Prince Joseph Erneszer Javier} MSc Data Science Asian Institute
+of Management
+
+    \subsection{Executive Summary}\label{executive-summary}
+
+    Various combinations of categorical data encoding, features scaling, and
+regression algorithms were run on a movies dataset prepared by Mehreen
+Ahmed of the National University of Sciences and Technology (NUST),
+Pakistan. The goal was to predict the gross income and rating based on
+features sourced from IMDB, Youtube, and Twitter.
+
+23.73\% was the highest coefficient of determination \(r^2\) achieved
+when predicting movie ratings. The regression algorithm used is Ridge
+Regression with parameter \(\alpha = 0.1\). One-hot encoding was applied
+on the \texttt{Genre} feature, and min-max scaling was applied on each
+of the feature. A total of 11 features were used.
+
+The number of likes on the movie trailer on Youtube is the feature with
+the largest positive coefficent. The number of dislikes on Youtube
+trailers has the largest negative coefficient, followed closely by the
+number of comments on the trailers.
+
+When predicting gross income, the highest \(r^2\) of 61.96\% was
+achieved using kNN Regression using 11 neighbors. One-hot encoding was
+applied on the genre feature, and standard scaling was applied on each
+of the feature. A total of five features were used namely the number of
+screens on which the movie was initially launched in the US and its
+logarithm, three movie genres.
+
+Regression model results are summarized below:
+
+\begin{longtable}[]{@{}llccc@{}}
+\toprule
+Variable Predicted & Scaling & Features & Machine Learning Method & Test
+\(r^2\)\tabularnewline
+\midrule
+\endhead
+Ratings & Min-Max & 11 & Ridge & 0.2373\tabularnewline
+Gross Income & Std & 5 & kNN Reg & 0.6196\tabularnewline
+\bottomrule
+\end{longtable}
+
+    \subsection{Data Description}\label{data-description}
+
+The dataset used was compiled by Mehreen Ahmed of the Department of
+Computer Software Engineering, National University of Sciences and
+Technology (NUST), Pakistan. The dataset contains 231 movies and 14
+columns (12 features and 2 target variables). Features per movie were
+taken from IMDB, Twitter, and Youtube.
+
+The features are: 1. Genre (Action, Adventure, Drama, etc. mapped to
+numeric values) * Budget from IMDB (US Dollars) * Number of Screens on
+which the movie was initially launched in the US * Sequel (1 if first
+release, 2 if second release, etc.) * Aggregate Actor Followers: Sum of
+followers of top 3 cast from Twitter * Number of views on trailers on
+Youtube * Number of likes on trailers on Youtube * Number of dislikes on
+trailers on Youtube * Number of comments on trailers on Youtube *
+Sentiment score from Twitter (0 for neutral, + for positive sentiment,
+and - for negative sentiment)
+
+The target variables are: 1. Ratings (ranges from 1 to 10) collected
+from IMDB * Gross Income in USD from IMDB
+
+    \subsection{Functions and Packages}\label{functions-and-packages}
+
+    Below are the functions and packages that were used for exploratory data
+analysis and predictive modeling. They were placed into this section
+first as a single location for all coded functions and second, in order
+not to crowd the rest of the sections below.
+
+\paragraph{Python Packages}\label{python-packages}
+
+\texttt{Numpy} gives a wide array of functionality when dealing with
+arrays (pun intended). \texttt{Matplotlib} and \texttt{Seaborn} allow us
+to make charts easily. \texttt{Pandas} enable us to transform data into
+tables that are more understandable and transformable.
+
+We also import \texttt{Counter} that allows us to quickly count the
+number of unique values in a sequence of values like a list, array, or
+dictionary.
+
+We import seven packages from \texttt{sklearn}.
+\texttt{Train\_test\_split} allows us to split samples in a dataset into
+test set and training set. Training set is what we feed the regression
+algorithms, while test set is what we use to test the accuracy of the
+algorithm. The regression algorithms were implemented using the
+\texttt{sklearn} packages \texttt{KNeighborsRegressor},
+\texttt{LinearRegression}, \texttt{Ridge}, and \texttt{Lasso.}
+\texttt{TransformerMixin} was used to allow \texttt{fit\_transform}
+method in class. \texttt{MinMaxScaler} and \texttt{StandardScaler}
+scales data by range (min-max) or by mean and standard deviation
+(standard). Finally, \texttt{LabelEncoder} converts categorical data to
+numerical dummy variables.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+        \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{Counter}
+        
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{neighbors} \PY{k}{import} \PY{n}{KNeighborsRegressor}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{LinearRegression}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{Ridge}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{Lasso}
+        
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{base} \PY{k}{import} \PY{n}{TransformerMixin}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{MinMaxScaler}\PY{p}{,} \PY{n}{StandardScaler}
+        
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{LabelEncoder}
+\end{Verbatim}
+
+
+    \paragraph{Data Exploration Functions}\label{data-exploration-functions}
+
+To aid with data exploration, the function \texttt{conv\_to\_numeric}
+was developed. This function scans through a dataframe and will try to
+convert the contents to numerical values. If it's unable to convert the
+contents automatically, it will notify which columns contained
+non-numeric values and the values that couldn't be converted. This is
+useful for example if we want to convert "1500" encoded as string or
+text to the number 1500 or to identify "2000 pesos" as a value that
+couldn't be converted. We can then manually change it to 2000.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} Defining convertion function}
+        \PY{k}{def} \PY{n+nf}{conv\PYZus{}to\PYZus{}numeric}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{inds\PYZus{}0}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Convert all values in dataframe to numeric if possible, otherwise, skip.}
+        \PY{l+s+sd}{    Print list of values that cannot be converted and must be converted}
+        \PY{l+s+sd}{    manually. Returns new indices of columns that were not completely }
+        \PY{l+s+sd}{    converted.}
+        
+        \PY{l+s+sd}{    Inputs}
+        \PY{l+s+sd}{    ======}
+        \PY{l+s+sd}{    df: DataFrame of values to convert}
+        \PY{l+s+sd}{    inds\PYZus{}0: List of indices of columns in DataFrame to convert}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+        
+            \PY{c+c1}{\PYZsh{} Initial pass: convert to float, ignore data if unconvertable}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{inds\PYZus{}0}\PY{p}{:}
+                \PY{n}{df}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{float}\PY{p}{,} \PY{n}{errors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ignore}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+            \PY{c+c1}{\PYZsh{} Second pass, show the unconvertable data per feature}
+            \PY{n}{inds\PYZus{}1} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{inds\PYZus{}0}\PY{p}{:}
+                \PY{n}{typ} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{dtype}
+                \PY{k}{if} \PY{n}{typ} \PY{o}{==} \PY{n+nb}{object}\PY{p}{:}
+                    \PY{n}{inds\PYZus{}1}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+        
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No. of columns that must be changed to numerical:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{inds\PYZus{}0}\PY{p}{)}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No. of columns automatically changed to numbers, 1st pass:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                  \PY{n+nb}{len}\PY{p}{(}\PY{n}{inds\PYZus{}0}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n+nb}{len}\PY{p}{(}\PY{n}{inds\PYZus{}1}\PY{p}{)}\PY{p}{)}
+        
+            \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Remaining columns with values that must be changed to numbers:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+            \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{inds\PYZus{}1}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{All values numerical already.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+            \PY{k}{else}\PY{p}{:}
+                \PY{n}{index} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{n}{cols} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{n}{vals} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{inds\PYZus{}1}\PY{p}{:}
+                    \PY{n}{v} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{logical\PYZus{}not}\PY{p}{(}
+                        \PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{str}\PY{o}{.}\PY{n}{isnumeric}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{values}
+                    \PY{n}{index}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                    \PY{n}{cols}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                    \PY{n}{vals}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+        
+                \PY{n}{index2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{index}\PY{p}{)}
+                \PY{n}{cols2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{cols}\PY{p}{)}
+                \PY{n}{vals2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{vals}\PY{p}{)}
+        
+                \PY{n}{df2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{index2}\PY{p}{,} \PY{n}{cols2}\PY{p}{,} \PY{n}{vals2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+                \PY{n}{df2}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Index}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Names}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Values}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{n}{display}\PY{p}{(}\PY{n}{df2}\PY{p}{)}
+        
+            \PY{k}{return} \PY{n}{inds\PYZus{}1}
+\end{Verbatim}
+
+
+    The function \texttt{column\_non\_num} accepts a dataframe and returns
+the column indices and names of columns that contain non-numerical
+values. This is useful when looking for columns that are expected to
+contain numerical data, but still contains non-numerical data. For
+example, if a column for weights include "32 kg", this is read by the
+computer as non-numerical because of " kg". This function will help us
+more easily generate a list of those columns.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{def} \PY{n+nf}{column\PYZus{}non\PYZus{}num}\PY{p}{(}\PY{n}{df}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Accept dataframe and print columns with index of columns containing}
+        \PY{l+s+sd}{    non\PYZhy{}numerical data}
+        
+        \PY{l+s+sd}{    Input}
+        \PY{l+s+sd}{    =====}
+        \PY{l+s+sd}{    df: Dataframe with multiple columns}
+        
+        \PY{l+s+sd}{    Returns}
+        \PY{l+s+sd}{    =======}
+        \PY{l+s+sd}{    List of tuples of indices and columns with non\PYZhy{}numerical data}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n}{inds} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{cols} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{typ} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{dtype}
+                \PY{k}{if} \PY{n}{typ} \PY{o}{!=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{float64}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{and} \PY{n}{typ} \PY{o}{!=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{int64}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                    \PY{n}{inds}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                    \PY{n}{cols}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No. of columns containing non\PYZhy{}numerical data:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{inds}\PY{p}{)}\PY{p}{)}
+        
+            \PY{k}{return} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{n}{inds}\PY{p}{,} \PY{n}{cols}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    To fill in \texttt{NaN} values with the median value along a column, we
+use \texttt{DatFrameImputer} class defined below.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{class} \PY{n+nc}{DataFrameImputer}\PY{p}{(}\PY{n}{TransformerMixin}\PY{p}{)}\PY{p}{:}
+        
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Impute missing values.}
+        
+        \PY{l+s+sd}{        Columns of dtype object are imputed with the most frequent value }
+        \PY{l+s+sd}{        in column.}
+        
+        \PY{l+s+sd}{        Columns of other types are imputed with median of column.}
+        
+        \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{k}{def} \PY{n+nf}{fit}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}\PY{p}{:}
+        
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{fill} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{n}{X}\PY{p}{[}\PY{n}{c}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                    \PY{k}{if} \PY{n}{X}\PY{p}{[}\PY{n}{c}\PY{p}{]}\PY{o}{.}\PY{n}{dtype} \PY{o}{==} \PY{n}{np}\PY{o}{.}\PY{n}{dtype}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{O}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{else} \PY{n}{X}\PY{p}{[}\PY{n}{c}\PY{p}{]}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n}{X}\PY{p}{]}\PY{p}{,}
+                    \PY{n}{index}\PY{o}{=}\PY{n}{X}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+        
+                \PY{k}{return} \PY{n+nb+bp}{self}
+        
+            \PY{k}{def} \PY{n+nf}{transform}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}\PY{p}{:}
+                \PY{k}{return} \PY{n}{X}\PY{o}{.}\PY{n}{fillna}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{fill}\PY{p}{)}
+\end{Verbatim}
+
+
+    \paragraph{Regression Models}\label{regression-models}
+
+Below is the function defined for four regression algorithms: k Nearest
+Neighbors Regression (kNN), Linear Regression, Ridge regression, and
+Lasso regression. The dataset that will be analyzed is composed of
+observations or samples with various features and two target variables
+(movie rating and gross income). The regression models are supervised,
+which means we know from the start the features and the values of the
+target variables of the observations we will use to train the models.
+
+The general methodology for "training" the regression algorithms will be
+as follows: The datapoints/samples/observations in the dataset will be
+randomized. Then they will be split into two: training set and test set.
+The training set will be used to train the classification models while
+the test set, which the models shouldn't have "seen" before will be used
+to check the models' accuracy. The classification model's objective is
+to correctly classify a new observation based on its features.
+
+The function below can be used to select one of the four regression
+models, generate a plot of accuracy vs. model parameters, and output a
+report showing the maximum average accuracy achieved, the variance of
+accuracy over multiple iterations, and the optimal parameters.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{class} \PY{n+nc}{ML\PYZus{}Regressor}\PY{p}{:}
+        
+            \PY{k}{def} \PY{n+nf}{fit}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{feature}\PY{p}{,} \PY{n}{target}\PY{p}{,} \PY{n}{ml\PYZus{}type}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{knn\PYZus{}reg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                    \PY{n}{param\PYZus{}range}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{)}\PY{p}{,} \PY{n}{seed\PYZus{}settings}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{)}\PY{p}{,} 
+                   \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{l+m+mi}{10000}\PY{p}{)}\PY{p}{:}
+                \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{        Fit data to machine learning regressor. Iterate regression model }
+        \PY{l+s+sd}{        mutiple times. Return the maximum accuracy achieved and the}
+        \PY{l+s+sd}{        corresponding parameter.}
+        
+        \PY{l+s+sd}{        Inputs}
+        \PY{l+s+sd}{        ======}
+        \PY{l+s+sd}{        feature: Dataframe of features}
+        \PY{l+s+sd}{        target: Series of target values}
+        \PY{l+s+sd}{        param\PYZus{}range: Range of values for parameters}
+        \PY{l+s+sd}{        seed\PYZus{}settings: Range of seed settings to run}
+        
+        \PY{l+s+sd}{        Outputs}
+        \PY{l+s+sd}{        =======}
+        \PY{l+s+sd}{        acc\PYZus{}max: Float. Maximum regression accuracy achieved.}
+        \PY{l+s+sd}{        param\PYZus{}max: Float. Regressor parameter that gives maximum accuracy.}
+        \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                
+                \PY{n}{feature} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{feature}\PY{p}{)}
+        
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{param\PYZus{}range} \PY{o}{=} \PY{n}{param\PYZus{}range}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ml\PYZus{}type} \PY{o}{=} \PY{n}{ml\PYZus{}type}
+        
+                \PY{n}{train\PYZus{}acc} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{n}{test\PYZus{}acc} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+                \PY{c+c1}{\PYZsh{} Initiate counter for number of trials}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{0}
+        
+                \PY{c+c1}{\PYZsh{} create an array of cols: parameters and rows: seeds}
+                \PY{k}{for} \PY{n}{seed} \PY{o+ow}{in} \PY{n}{seed\PYZus{}settings}\PY{p}{:}
+        
+                    \PY{c+c1}{\PYZsh{} count one trial}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{iterations} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+        
+                    \PY{c+c1}{\PYZsh{} split data into test and training sets}
+                    \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{feature}\PY{p}{,}
+                                                                        \PY{n}{target}\PY{p}{,}
+                                                                        \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{n}{seed}\PY{p}{)}
+                    \PY{n}{train} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                    \PY{n}{test} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                    \PY{n}{coefs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+                    \PY{c+c1}{\PYZsh{} make a list of accuracies for different parameters}
+                    \PY{k}{for} \PY{n}{param} \PY{o+ow}{in} \PY{n}{param\PYZus{}range}\PY{p}{:}
+                        \PY{c+c1}{\PYZsh{} build the model}
+                        \PY{k}{if} \PY{n}{ml\PYZus{}type} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{knn\PYZus{}reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                            \PY{n}{clf} \PY{o}{=} \PY{n}{KNeighborsRegressor}\PY{p}{(}\PY{n}{n\PYZus{}neighbors}\PY{o}{=}\PY{n}{param}\PY{p}{)}
+        
+                        \PY{k}{elif} \PY{n}{ml\PYZus{}type} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lin\PYZus{}reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                            \PY{n}{clf} \PY{o}{=} \PY{n}{LinearRegression}\PY{p}{(}\PY{p}{)}
+        
+                        \PY{k}{elif} \PY{n}{ml\PYZus{}type} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ridge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                            \PY{n}{clf} \PY{o}{=} \PY{n}{Ridge}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{n}{param}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{n}{max\PYZus{}iter}\PY{p}{)}
+                        
+                        \PY{k}{elif} \PY{n}{ml\PYZus{}type} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lasso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                            \PY{n}{clf} \PY{o}{=} \PY{n}{Lasso}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{n}{param}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{n}{max\PYZus{}iter}\PY{p}{)}
+        
+                        \PY{c+c1}{\PYZsh{} fit training set to classifier}
+                        \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
+        
+                        \PY{c+c1}{\PYZsh{} record training set accuracy}
+                        \PY{n}{train}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{clf}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}\PY{p}{)}
+        
+                        \PY{c+c1}{\PYZsh{} record generalization accuracy}
+                        \PY{n}{test}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{clf}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}\PY{p}{)}
+        
+                        \PY{c+c1}{\PYZsh{} record coefficients if ml\PYZus{}type != knn\PYZus{}class}
+                        \PY{k}{if} \PY{n}{ml\PYZus{}type} \PY{o}{!=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{knn\PYZus{}reg}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{and} \PY{n}{param} \PY{o}{==} \PY{l+m+mf}{0.01}\PY{p}{:}  \PY{c+c1}{\PYZsh{} get coef @ 0.01}
+                            \PY{n}{coefs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{clf}\PY{o}{.}\PY{n}{coef\PYZus{}}\PY{p}{)}
+        
+                    \PY{c+c1}{\PYZsh{} append the list to \PYZus{}acc arrays}
+                    \PY{n}{train\PYZus{}acc}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{train}\PY{p}{)}
+                    \PY{n}{test\PYZus{}acc}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{test}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} compute mean and error across columns}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{train\PYZus{}all} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{train\PYZus{}acc}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{test\PYZus{}all} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{test\PYZus{}acc}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} compute mean coefficients}
+                \PY{k}{if} \PY{n}{ml\PYZus{}type} \PY{o}{!=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{knn\PYZus{}reg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coefs\PYZus{}all} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{coefs}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} compute variance of accuracies}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{var\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{var}\PY{p}{(}\PY{n}{train\PYZus{}acc}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{var\PYZus{}test} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{var}\PY{p}{(}\PY{n}{test\PYZus{}acc}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} compute the best parameter and maximum accuracy}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{max\PYZus{}inds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{test\PYZus{}all}\PY{p}{)}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{acc\PYZus{}max} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{amax}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{test\PYZus{}all}\PY{p}{)}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{param\PYZus{}max} \PY{o}{=} \PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{param\PYZus{}range}\PY{p}{)}\PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{max\PYZus{}inds}\PY{p}{]}
+        
+                \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{acc\PYZus{}max}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{param\PYZus{}max}
+        
+            \PY{k}{def} \PY{n+nf}{plot}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{show\PYZus{}PCC}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{report}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{:}
+                \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{        Plot accuracy vs parameter for test and training data. Print}
+        \PY{l+s+sd}{        maximum accuracy and corresponding parameter value. Print number of }
+        \PY{l+s+sd}{        trials.}
+        
+        \PY{l+s+sd}{        Inputs}
+        \PY{l+s+sd}{        ======}
+        \PY{l+s+sd}{        show\PYZus{}PCC: Boolean. will show PCC on plot if True}
+        \PY{l+s+sd}{        report: Boolean. Will show report if True}
+        
+        \PY{l+s+sd}{        Outputs}
+        \PY{l+s+sd}{        =======}
+        \PY{l+s+sd}{        Plot of accuracy vs parameter for test and training data}
+        \PY{l+s+sd}{        Report showing number of maximum accuracy, optimal parameters, PCC, }
+        \PY{l+s+sd}{        and no. of iterations}
+        \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                
+                \PY{k}{if} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ml\PYZus{}type} \PY{o}{!=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{knn\PYZus{}reg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                    \PY{n}{plt}\PY{o}{.}\PY{n}{xscale}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{log}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} plot train and errors and standard devs}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{param\PYZus{}range}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{train\PYZus{}all}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                         \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{training set}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{fill\PYZus{}between}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{param\PYZus{}range}\PY{p}{,}
+                                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{train\PYZus{}all} \PY{o}{+} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{var\PYZus{}train}\PY{p}{,}
+                                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{train\PYZus{}all} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{var\PYZus{}train}\PY{p}{,}
+                                 \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} plot test and errors and standard devs}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{param\PYZus{}range}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{test\PYZus{}all}\PY{p}{,}
+                         \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{test set}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{fill\PYZus{}between}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{param\PYZus{}range}\PY{p}{,}
+                                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{test\PYZus{}all} \PY{o}{+} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{var\PYZus{}test}\PY{p}{,}
+                                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{test\PYZus{}all} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{var\PYZus{}test}\PY{p}{,}
+                                 \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{)}
+        
+                \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Parameter Value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ml\PYZus{}type} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{: Accuracy vs Parameter Value}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+        
+                \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        
+                \PY{k}{if} \PY{n}{report} \PY{o}{==} \PY{k+kc}{True}\PY{p}{:}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Report:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{=======}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Max average accuracy: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}
+                        \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{acc\PYZus{}max}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Var of accuracy at optimal parameter: }\PY{l+s+si}{\PYZob{}0:.4f\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}
+                        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{var\PYZus{}test}\PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{max\PYZus{}inds}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Optimal parameter: }\PY{l+s+si}{\PYZob{}0:.4f\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{param\PYZus{}max}\PY{p}{)}\PY{p}{)}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total iterations: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{iterations}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{Data Preparation}\label{data-preparation}
+
+\paragraph{Importing Data}\label{importing-data}
+
+The dataset is saved in an excel file
+\texttt{2014\ and\ 2015\ CSM\ dataset.xlsx.} The dataset was loaded in a
+pandas dataframe, \texttt{df}, which organizes the data in table form.
+Each column in the pandas dataframe corresponds to a feature of an
+observation or sample. For example, one feature is the movie budget.
+Meanwhile, the rows represent each observation or sample, which in this
+case, is each movie.
+
+The dataset contains 14 columns and 231 rows or samples.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{2014 and 2015 CSM dataset.xlsx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} cols and rows}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No. of features/columns in the dataset: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No. of samples/rows in the dataset: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No. of features/columns in the dataset: 14
+No. of samples/rows in the dataset: 231
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Showing the first three rows:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{==========}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{display}\PY{p}{(}\PY{n}{\PYZus{}}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Showing the last three rows:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{==========}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{display}\PY{p}{(}\PY{n}{\PYZus{}}\PY{o}{.}\PY{n}{tail}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Showing the first three rows:
+==========
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+            Movie  Year  Ratings  Genre      Gross      Budget  Screens  \
+0         13 Sins  2014      6.3      8       9130   4000000.0     45.0   
+1  22 Jump Street  2014      7.1      1  192000000  50000000.0   3306.0   
+2  3 Days to Kill  2014      6.2      1   30700000  28000000.0   2872.0   
+
+   Sequel  Sentiment    Views  Likes  Dislikes  Comments  Aggregate Followers  
+0       1          0  3280543   4632       425       636            1120000.0  
+1       2          2   583289   3465        61       186           12350000.0  
+2       1          0   304861    328        34        47             483000.0  
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Showing the last three rows:
+==========
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+                   Movie  Year  Ratings  Genre     Gross      Budget  Screens  \
+228  Unfinished Business  2015      5.4      8  10200000  35000000.0   2777.0   
+229             War Room  2015      5.4      1  12300000   3000000.0      NaN   
+230          The Gallows  2015      4.4     15  22600000    100000.0   2720.0   
+
+     Sequel  Sentiment    Views  Likes  Dislikes  Comments  \
+228       1          7  3450614   6823       325       409   
+229       1         10    66872    400        67       201   
+230       1         -5   659772   2841       431       606   
+
+     Aggregate Followers  
+228                  NaN  
+229                  NaN  
+230                  NaN  
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} columns}
+        \PY{p}{[}\PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{df}\PY{o}{.}\PY{n}{columns}\PY{p}{]}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Movie
+Year
+Ratings
+Genre
+Gross
+Budget
+Screens
+Sequel
+Sentiment
+Views
+Likes
+Dislikes
+Comments
+Aggregate Followers
+
+    \end{Verbatim}
+
+    \subsubsection{Cleaning the Data}\label{cleaning-the-data}
+
+    A clean dataset is imperative to a good model. We first checked that
+there are three columns with some null values. And one column
+\texttt{Aggregate\ Followers} has 35 null values or 15\% of the total
+data. We decided to drop this column.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{} percent null values per column in ascending order}
+         \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{[}\PY{n}{df}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{any}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Percent of columns with null: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{===========}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)} \PY{o}{/} \PY{n+nb}{len}\PY{p}{(}\PY{n}{df}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{100}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Percent of columns with null: 3
+===========
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} Aggregate Followers    15.151515
+         Screens                 4.329004
+         Budget                  0.432900
+         Comments                0.000000
+         Dislikes                0.000000
+         Likes                   0.000000
+         Views                   0.000000
+         Sentiment               0.000000
+         Sequel                  0.000000
+         Gross                   0.000000
+         Genre                   0.000000
+         Ratings                 0.000000
+         Year                    0.000000
+         Movie                   0.000000
+         dtype: float64
+\end{Verbatim}
+            
+    44 rows have null values. Two of these rows have null values of 14\%.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{c+c1}{\PYZsh{} percent null values per row descending order, top 10}
+         \PY{n}{a} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{df}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{any}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No. of rows with null: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{df}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{any}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{/} \PY{n}{df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{100}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{10 rows with highest number of null values, in percent}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{\PYZus{}}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No. of rows with null: 44
+10 rows with highest number of null values, in percent
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} 115    14.285714
+         229    14.285714
+         109     7.142857
+         98      7.142857
+         95      7.142857
+         94      7.142857
+         84      7.142857
+         80      7.142857
+         76      7.142857
+         69      7.142857
+         dtype: float64
+\end{Verbatim}
+            
+    We drop columns with null values greater than 15\%.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{} drop all columns with na exceeding threshold.}
+         
+         \PY{n}{prop} \PY{o}{=} \PY{l+m+mf}{0.15}  \PY{c+c1}{\PYZsh{} maximum set proportion of null values per column, drop if exceeded}
+         \PY{n}{thresh} \PY{o}{=} \PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{prop}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} proportion of num of rows}
+         
+         \PY{n}{\PYZus{}df} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{n}{thresh}\PY{o}{=}\PY{n}{thresh}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{drop}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}  \PY{c+c1}{\PYZsh{} drop rows that have \PYZlt{} non\PYZhy{}null thresh values}
+         \PY{n}{display}\PY{p}{(}\PY{n}{\PYZus{}df}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} shape after dropping}
+         \PY{n}{display}\PY{p}{(}\PY{n}{\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Movie         0
+Year          0
+Ratings       0
+Genre         0
+Gross         0
+Budget        1
+Screens      10
+Sequel        0
+Sentiment     0
+Views         0
+Likes         0
+Dislikes      0
+Comments      0
+dtype: int64
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+(231, 13)
+    \end{verbatim}
+
+    
+    There's only one column with non-numerical data: \texttt{Movie}, which
+is as expected.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{} non\PYZhy{}numerical data}
+         \PY{n}{a} \PY{o}{=} \PY{n}{column\PYZus{}non\PYZus{}num}\PY{p}{(}\PY{n}{\PYZus{}df}\PY{p}{)}
+         \PY{n}{inds} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{n}{i} \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{j} \PY{o+ow}{in} \PY{n}{a}\PY{p}{]}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Index}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{cats} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{n}{j} \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{j} \PY{o+ow}{in} \PY{n}{a}\PY{p}{]}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{inds}\PY{p}{,} \PY{n}{cats}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{display}\PY{p}{(}\PY{n}{\PYZus{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No. of columns containing non-numerical data: 1
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+   Index Feature Name
+0      0        Movie
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{\PYZus{}df4} \PY{o}{=} \PY{n}{\PYZus{}df}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    Missing values were filled in with the median value per column. The
+final cleaned dataframe is saved in df\_clean.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{} Impute missing values in the dataset}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No. of null values prior to imputing:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{\PYZus{}df4}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n}{\PYZus{}df5} \PY{o}{=} \PY{n}{DataFrameImputer}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{\PYZus{}df4}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No. of null values after imputing:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{\PYZus{}df5}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} shape after imputing}
+         \PY{n}{display}\PY{p}{(}\PY{n}{\PYZus{}df5}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No. of null values prior to imputing: 11
+No. of null values after imputing: 0
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+(231, 13)
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{} saving to df\PYZus{}clean}
+         \PY{n}{df\PYZus{}clean} \PY{o}{=} \PY{n}{\PYZus{}df5}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+         \PY{n}{df\PYZus{}clean}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:}                     Movie  Year  Ratings  Genre      Gross       Budget  \textbackslash{}
+         0                 13 Sins  2014      6.3      8       9130    4000000.0   
+         1          22 Jump Street  2014      7.1      1  192000000   50000000.0   
+         2          3 Days to Kill  2014      6.2      1   30700000   28000000.0   
+         3  300: Rise of an Empire  2014      6.3      1  106000000  110000000.0   
+         4       A Haunted House 2  2014      4.7      8   17300000    3500000.0   
+         
+            Screens  Sequel  Sentiment    Views  Likes  Dislikes  Comments  
+         0     45.0       1          0  3280543   4632       425       636  
+         1   3306.0       2          2   583289   3465        61       186  
+         2   2872.0       1          0   304861    328        34        47  
+         3   3470.0       2          0   452917   2429       132       590  
+         4   2310.0       2          0  3145573  12163       610      1082  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{c+c1}{\PYZsh{} No more null values}
+         \PY{n}{df\PYZus{}clean}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:} 0
+\end{Verbatim}
+            
+    \subsubsection{Separating Categorical Variables from Numerical
+Variables}\label{separating-categorical-variables-from-numerical-variables}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{df\PYZus{}sample\PYZus{}0} \PY{o}{=} \PY{n}{df\PYZus{}clean}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Movie}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    We added logarithm values for each numerical variable.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{temp} \PY{o}{=} \PY{n}{df\PYZus{}sample\PYZus{}0}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ratings}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gross}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n}{temp}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+             \PY{k}{if} \PY{n}{c} \PY{o}{!=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sentiment}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{and} \PY{n}{c} \PY{o}{!=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Genre}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{n}{temp}\PY{p}{[}\PY{n}{c}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{df\PYZus{}sample\PYZus{}0}\PY{p}{[}\PY{n}{c}\PY{p}{]} \PY{o}{+} \PY{l+m+mi}{10}\PY{o}{*}\PY{o}{*}\PY{o}{\PYZhy{}}\PY{l+m+mi}{30}\PY{p}{)}
+\end{Verbatim}
+
+
+    Separate dataframes were created for categorical and numerical
+variables. \texttt{Genre} is the only categorical variable, although
+it's encoded as numbers.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{c+c1}{\PYZsh{} categorical variables}
+         \PY{n}{cats} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Genre}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+         \PY{n}{nums} \PY{o}{=} \PY{p}{[}\PY{n}{i} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{temp}\PY{o}{.}\PY{n}{columns} \PY{k}{if} \PY{n}{i} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{cats}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{df\PYZus{}sample} \PY{o}{=} \PY{n}{temp}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    The two target variables are \texttt{Ratings} and \texttt{Gross}. Two
+series \texttt{\_y1} and \texttt{\_y2} were created to contain these
+variables.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{c+c1}{\PYZsh{} split into target, categorical, and numerical data}
+         \PY{n}{target1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ratings}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{target2} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gross}\PY{l+s+s1}{\PYZsq{}}
+         
+         \PY{n}{\PYZus{}y1} \PY{o}{=} \PY{n}{df\PYZus{}sample\PYZus{}0}\PY{p}{[}\PY{n}{target1}\PY{p}{]}
+         \PY{n}{\PYZus{}y2} \PY{o}{=} \PY{n}{df\PYZus{}sample\PYZus{}0}\PY{p}{[}\PY{n}{target2}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{\PYZus{}y1}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}23}]:} 0    6.3
+         1    7.1
+         2    6.2
+         3    6.3
+         4    4.7
+         Name: Ratings, dtype: float64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{\PYZus{}y2}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}24}]:} 0         9130
+         1    192000000
+         2     30700000
+         3    106000000
+         4     17300000
+         Name: Gross, dtype: int64
+\end{Verbatim}
+            
+    Categorical variables were saved in \texttt{df\_cat} and numerical
+variables were saved in \texttt{df\_num}. \texttt{Year} was removed from
+the dataframe.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{df\PYZus{}cat} \PY{o}{=} \PY{n}{df\PYZus{}sample}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{cats}\PY{p}{]}
+         \PY{n}{df\PYZus{}num} \PY{o}{=} \PY{n}{df\PYZus{}sample}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{nums}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{df\PYZus{}cat}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}26}]:}    Genre
+         0      8
+         1      1
+         2      1
+         3      1
+         4      8
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{n}{df\PYZus{}num}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}27}]:}         Budget  Screens  Sequel  Sentiment    Views  Likes  Dislikes  \textbackslash{}
+         0    4000000.0     45.0       1          0  3280543   4632       425   
+         1   50000000.0   3306.0       2          2   583289   3465        61   
+         2   28000000.0   2872.0       1          0   304861    328        34   
+         3  110000000.0   3470.0       2          0   452917   2429       132   
+         4    3500000.0   2310.0       2          0  3145573  12163       610   
+         
+            Comments  Budget\_log  Screens\_log  Sequel\_log  Views\_log  Likes\_log  \textbackslash{}
+         0       636   15.201805     3.806662    0.000000  15.003520   8.440744   
+         1       186   17.727534     8.103494    0.693147  13.276438   8.150468   
+         2        47   17.147715     7.962764    0.000000  12.627611   5.793014   
+         3       590   18.515991     8.151910    0.693147  13.023464   7.795235   
+         4      1082   15.068274     7.745003    0.693147  14.961507   9.406154   
+         
+            Dislikes\_log  Comments\_log  
+         0      6.052089      6.455199  
+         1      4.110874      5.225747  
+         2      3.526361      3.850148  
+         3      4.882802      6.380123  
+         4      6.413459      6.986566  
+\end{Verbatim}
+            
+    The two target variables were resaved to \texttt{y1} and \texttt{y2.}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{y1} \PY{o}{=} \PY{n}{\PYZus{}y1}\PY{p}{[}\PY{p}{:}\PY{p}{]}
+         \PY{n}{y2} \PY{o}{=} \PY{n}{\PYZus{}y2}\PY{p}{[}\PY{p}{:}\PY{p}{]}
+\end{Verbatim}
+
+
+    Finally, we make another set of dataframes, this time, dataframes of
+"undummified" categories plus the targets added to the last column. The
+same was done for numerical categories. These will be used for data
+exploration below.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{df\PYZus{}cat\PYZus{}targ1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{df\PYZus{}cat}\PY{p}{,} \PY{n}{y1}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} get categories with targets 1}
+         \PY{n}{df\PYZus{}num\PYZus{}targ1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{df\PYZus{}num}\PY{p}{,} \PY{n}{y1}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} get num categories with targets 1}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{df\PYZus{}cat\PYZus{}targ2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{df\PYZus{}cat}\PY{p}{,} \PY{n}{y2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} get categories with targets 2}
+         \PY{n}{df\PYZus{}num\PYZus{}targ2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{df\PYZus{}num}\PY{p}{,} \PY{n}{y2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} get num categories with targets 2}
+\end{Verbatim}
+
+
+    \subsection{Data Exploration}\label{data-exploration}
+
+    The chart below shows the distributions of ratings per genre. Movies
+under genre 15 have the lowest ratings. Movies under genre 1 tend to
+have the widest range of scores. Movies under genre 9 have the highest
+median of ratings.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Ratings per Genre}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Genre}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Ratings}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{df\PYZus{}cat\PYZus{}targ1}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_57_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The movie in the dataset with the highest rating of 8.7 is Interstellar
+(2014). The movie with the lowest rating of 3.1 is Left Behind (2014).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}clean}\PY{p}{[}\PY{n}{df\PYZus{}clean}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ratings}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n+nb}{max}\PY{p}{(}\PY{n}{df\PYZus{}clean}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ratings}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+         \PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}clean}\PY{p}{[}\PY{n}{df\PYZus{}clean}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ratings}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n+nb}{min}\PY{p}{(}\PY{n}{df\PYZus{}clean}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ratings}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+           Movie  Year  Ratings  Genre      Gross       Budget  Screens  \
+55  Interstellar  2014      8.7      2  188000000  165000000.0   3561.0   
+
+    Sequel  Sentiment    Views  Likes  Dislikes  Comments  
+55       1          2  5421705  16635       751      4316  
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+          Movie  Year  Ratings  Genre     Gross      Budget  Screens  Sequel  \
+65  Left Behind  2014      3.1      1  14000000  16000000.0   1825.0       1   
+
+    Sentiment    Views  Likes  Dislikes  Comments  
+65          0  5611593  11187      2111      7595  
+    \end{verbatim}
+
+    
+    The chart below shows the distribution of gross income per genre. Genre
+1 has the widest range of gross income. Movies under Genre 2 have the
+highest median gross income.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Gross per Genre}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Genre}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Gross}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{df\PYZus{}cat\PYZus{}targ2}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_61_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The movie in the dataset with the highest gross income is Jurassic World
+(2015) while the movie with the lowest gross income is Locker 13.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}clean}\PY{p}{[}\PY{n}{df\PYZus{}clean}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gross}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n+nb}{max}\PY{p}{(}\PY{n}{df\PYZus{}clean}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gross}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+         \PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}clean}\PY{p}{[}\PY{n}{df\PYZus{}clean}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gross}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n+nb}{min}\PY{p}{(}\PY{n}{df\PYZus{}clean}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gross}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+              Movie  Year  Ratings  Genre      Gross       Budget  Screens  \
+163  Jurassic World  2015      7.3      1  643000000  150000000.0   4274.0   
+
+     Sequel  Sentiment    Views  Likes  Dislikes  Comments  
+163       4          1  9143740  34746      1074      5107  
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+        Movie  Year  Ratings  Genre  Gross    Budget  Screens  Sequel  \
+68  Locker 13  2014      4.8      7   2470  300000.0      3.0       1   
+
+    Sentiment  Views  Likes  Dislikes  Comments  
+68          0  30529     18         4         2  
+    \end{verbatim}
+
+    
+    Scatterplots below show relationship between ratings and numerical
+features in the dataset. Visually, it looks that Ratings are more
+correlated with budget and sequel.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{df\PYZus{}num\PYZus{}targ1}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Rating vs. }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{df\PYZus{}num\PYZus{}targ1}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Ratings}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{n}{df\PYZus{}num\PYZus{}targ1}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{p}{(}\PY{n}{df\PYZus{}num\PYZus{}targ1}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{col}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{y1}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_5.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_6.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_7.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_8.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_9.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_10.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_11.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_12.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_13.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_14.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Scatterplots below show relationship between Gross Income and numerical
+features in the dataset. Visually, it looks that gross income is
+correlated with budget and screens.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{df\PYZus{}num\PYZus{}targ2}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Gross Income vs. }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{df\PYZus{}num\PYZus{}targ2}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Gross Income}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{n}{df\PYZus{}num\PYZus{}targ2}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{df\PYZus{}num\PYZus{}targ2}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{col}\PY{p}{]}\PY{p}{,} \PY{n}{y2}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_5.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_6.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_7.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_8.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_9.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_10.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_11.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_12.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_13.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_14.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Predicting Movie Ratings}\label{predicting-movie-ratings}
+
+    K Nearest Neighbors Regression, Linear Regression, Ridge Regression, and
+Lasso Regression were the four regression algorithms used to predict
+Movie \texttt{Ratings}. Naturally, \texttt{Ratings} and
+\texttt{Gross\ Income}, the two variables being predicted, were removed
+from the features. The results were compared with each other and the
+algorithm that yields the highest "accuracy" measured in \(r^2\) was
+identified.
+
+    \paragraph{Individual Features}\label{individual-features}
+
+    The function below checks the accuracy of the regression model for each
+feature then returns the list of features from the one that gives the
+highest accuracy to the lowest accuracy.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{k}{def} \PY{n+nf}{ml\PYZus{}each\PYZus{}feature}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{knn\PYZus{}reg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}\PY{p}{,}
+                             \PY{n}{seeds}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{)}\PY{p}{,} \PY{n}{show}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}
+             
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Return a list of features and corresponding classification accuracy}
+         \PY{l+s+sd}{    when each feature is taken one by one.}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+         
+             \PY{c+c1}{\PYZsh{} First pass, checking each feature}
+             \PY{n}{acc} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{ml} \PY{o}{=} \PY{n}{ML\PYZus{}Regressor}\PY{p}{(}\PY{p}{)}
+         
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{x} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{p}{)}
+         
+                 \PY{n}{a}\PY{p}{,} \PY{n}{p} \PY{o}{=} \PY{n}{ml}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{ml\PYZus{}type}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{param\PYZus{}range}\PY{o}{=}\PY{n}{params}\PY{p}{,}
+                               \PY{n}{seed\PYZus{}settings}\PY{o}{=}\PY{n}{seeds}\PY{p}{)}
+                 \PY{n}{acc}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+         
+             \PY{n}{inds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argsort}\PY{p}{(}\PY{n}{acc}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+             \PY{n}{sorted\PYZus{}acc} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{acc}\PY{p}{)}\PY{p}{[}\PY{n}{inds}\PY{p}{]}
+             \PY{n}{cols} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{[}\PY{n}{inds}\PY{p}{]}
+         
+             \PY{k}{if} \PY{n}{show} \PY{o}{==} \PY{k+kc}{True}\PY{p}{:}
+                 \PY{n}{g} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{sorted\PYZus{}acc}\PY{p}{,} \PY{n}{cols}\PY{p}{)}
+                 \PY{n}{g}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n}{display}\PY{p}{(}\PY{n}{g}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}  \PY{c+c1}{\PYZsh{} display top 5 predictors}
+         
+             \PY{k}{return} \PY{n}{cols}  \PY{c+c1}{\PYZsh{} return features from best predictor to least predictor}
+\end{Verbatim}
+
+
+    \paragraph{Combinations of Features}\label{combinations-of-features}
+
+    The function below checks combinations of features that give highest
+regression accuracy. It works by first calculating the accuracy using
+the most predictive feature, then adds the next most predictive feature.
+If accuracy increases, then the features are taken together before
+checking the next feature. If the accuracy decreases upon adding another
+feature, then this feature is skipped moving to the next one.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{k}{def} \PY{n+nf}{optimize\PYZus{}feats}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cols}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{knn\PYZus{}reg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}\PY{p}{,}
+                            \PY{n}{seeds}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{)}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{l+m+mi}{10000}\PY{p}{)}\PY{p}{:}
+             
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Get features that will maximize classificationa accuracy}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+         
+             \PY{n}{ml} \PY{o}{=} \PY{n}{ML\PYZus{}Regressor}\PY{p}{(}\PY{p}{)}
+         
+             \PY{n}{lst} \PY{o}{=} \PY{p}{[}\PY{p}{]}  \PY{c+c1}{\PYZsh{} indices of optimal feats}
+             \PY{n}{accs} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}  \PY{c+c1}{\PYZsh{} accuracies}
+             \PY{n}{p\PYZus{}opts} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}  \PY{c+c1}{\PYZsh{} optimal parameters}
+         
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{lst2} \PY{o}{=} \PY{n}{lst}\PY{p}{[}\PY{p}{:}\PY{p}{]}
+                 \PY{n}{lst2}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                 \PY{n}{acc}\PY{p}{,} \PY{n}{p\PYZus{}opt} \PY{o}{=} \PY{n}{ml}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{n}{cols}\PY{p}{[}\PY{n}{lst2}\PY{p}{]}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{ml\PYZus{}type}\PY{o}{=}\PY{n}{t}\PY{p}{,}
+                                     \PY{n}{param\PYZus{}range}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seed\PYZus{}settings}\PY{o}{=}\PY{n}{seeds}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{n}{max\PYZus{}iter}\PY{p}{)}
+                 \PY{k}{if} \PY{n}{acc} \PY{o}{\PYZgt{}} \PY{n}{accs}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:}
+                     \PY{n}{accs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{acc}\PY{p}{)}
+                     \PY{n}{p\PYZus{}opts}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p\PYZus{}opt}\PY{p}{)}
+                     \PY{n}{lst}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+         
+             \PY{k}{if} \PY{n}{plot} \PY{o}{==} \PY{k+kc}{True}\PY{p}{:}
+                 \PY{n}{ml}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{n}{cols}\PY{p}{[}\PY{n}{lst}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{ml\PYZus{}type}\PY{o}{=}\PY{n}{t}\PY{p}{,}
+                        \PY{n}{param\PYZus{}range}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seed\PYZus{}settings}\PY{o}{=}\PY{n}{seeds}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{n}{max\PYZus{}iter}\PY{p}{)}
+                 \PY{n}{ml}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{show\PYZus{}PCC}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         
+             \PY{k}{return} \PY{n}{accs}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{p\PYZus{}opts}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{lst}
+\end{Verbatim}
+
+
+    \subsubsection{One-Hot Encoding}\label{one-hot-encoding}
+
+    First, the \texttt{Genre} feature was transformed to one-hot encoding.
+The idea is that per genre, the movie can either be under that genre
+(value = 1) or not (value = 0).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} \PY{n}{enc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{One\PYZhy{}Hot}\PY{l+s+s2}{\PYZdq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{c+c1}{\PYZsh{} One\PYZhy{}hot encoding}
+         \PY{n}{df\PYZus{}cat2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{get\PYZus{}dummies}\PY{p}{(}\PY{n}{df\PYZus{}cat}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{str}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{drop\PYZus{}first}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{df\PYZus{}cat2}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}41}]:}    Genre\_10  Genre\_12  Genre\_15  Genre\_2  Genre\_3  Genre\_4  Genre\_6  Genre\_7  \textbackslash{}
+         0         0         0         0        0        0        0        0        0   
+         1         0         0         0        0        0        0        0        0   
+         2         0         0         0        0        0        0        0        0   
+         3         0         0         0        0        0        0        0        0   
+         4         0         0         0        0        0        0        0        0   
+         
+            Genre\_8  Genre\_9  
+         0        1        0  
+         1        0        0  
+         2        0        0  
+         3        0        0  
+         4        1        0  
+\end{Verbatim}
+            
+    The dataframe with one-hot encoded genre is shown below.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{n}{X0} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{df\PYZus{}num\PYZus{}targ1}\PY{p}{,} \PY{n}{df\PYZus{}cat2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Ratings}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{conv\PYZus{}to\PYZus{}numeric}\PY{p}{(}\PY{n}{X0}\PY{p}{,} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{X0}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+         \PY{n}{X0}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No. of columns that must be changed to numerical: 25
+No. of columns automatically changed to numbers, 1st pass: 25
+
+Remaining columns with values that must be changed to numbers:
+All values numerical already.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}42}]:}         Budget  Screens  Sequel  Sentiment      Views    Likes  Dislikes  \textbackslash{}
+         0    4000000.0     45.0     1.0        0.0  3280543.0   4632.0     425.0   
+         1   50000000.0   3306.0     2.0        2.0   583289.0   3465.0      61.0   
+         2   28000000.0   2872.0     1.0        0.0   304861.0    328.0      34.0   
+         3  110000000.0   3470.0     2.0        0.0   452917.0   2429.0     132.0   
+         4    3500000.0   2310.0     2.0        0.0  3145573.0  12163.0     610.0   
+         
+            Comments  Budget\_log  Screens\_log   {\ldots}     Genre\_10  Genre\_12  Genre\_15  \textbackslash{}
+         0     636.0   15.201805     3.806662   {\ldots}          0.0       0.0       0.0   
+         1     186.0   17.727534     8.103494   {\ldots}          0.0       0.0       0.0   
+         2      47.0   17.147715     7.962764   {\ldots}          0.0       0.0       0.0   
+         3     590.0   18.515991     8.151910   {\ldots}          0.0       0.0       0.0   
+         4    1082.0   15.068274     7.745003   {\ldots}          0.0       0.0       0.0   
+         
+            Genre\_2  Genre\_3  Genre\_4  Genre\_6  Genre\_7  Genre\_8  Genre\_9  
+         0      0.0      0.0      0.0      0.0      0.0      1.0      0.0  
+         1      0.0      0.0      0.0      0.0      0.0      0.0      0.0  
+         2      0.0      0.0      0.0      0.0      0.0      0.0      0.0  
+         3      0.0      0.0      0.0      0.0      0.0      0.0      0.0  
+         4      0.0      0.0      0.0      0.0      0.0      1.0      0.0  
+         
+         [5 rows x 25 columns]
+\end{Verbatim}
+            
+    \subsubsection{Scaling}\label{scaling}
+
+    Two scaling methods were used: min-max scaling or standard scaling.
+Min-max scaling scales the values in a column by the range of values in
+that column (minimum values to maximum values). Standard scaling scales
+the values in a column by the mean and standard deviation of the values
+in that column.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}43}]:} \PY{c+c1}{\PYZsh{} min\PYZhy{}max scaling}
+         \PY{n}{mms} \PY{o}{=} \PY{n}{MinMaxScaler}\PY{p}{(}\PY{p}{)}
+         \PY{n}{X\PYZus{}mm} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{mms}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X0}\PY{p}{)}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{X0}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+         \PY{n}{X\PYZus{}mm}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}43}]:}      Budget   Screens    Sequel  Sentiment     Views     Likes  Dislikes  \textbackslash{}
+         0  0.015724  0.009949  0.000000   0.567164  0.100528  0.012498  0.030444   
+         1  0.199776  0.764461  0.166667   0.597015  0.017857  0.009348  0.004370   
+         2  0.111751  0.664044  0.000000   0.567164  0.009323  0.000882  0.002436   
+         3  0.439843  0.802406  0.166667   0.567164  0.013861  0.006552  0.009456   
+         4  0.013724  0.534012  0.166667   0.567164  0.096391  0.032821  0.043696   
+         
+            Comments  Budget\_log  Screens\_log   {\ldots}     Genre\_10  Genre\_12  Genre\_15  \textbackslash{}
+         0  0.016578    0.494523     0.405470   {\ldots}          0.0       0.0       0.0   
+         1  0.004848    0.803265     0.965041   {\ldots}          0.0       0.0       0.0   
+         2  0.001225    0.732388     0.946714   {\ldots}          0.0       0.0       0.0   
+         3  0.015379    0.899644     0.971346   {\ldots}          0.0       0.0       0.0   
+         4  0.028204    0.478200     0.918355   {\ldots}          0.0       0.0       0.0   
+         
+            Genre\_2  Genre\_3  Genre\_4  Genre\_6  Genre\_7  Genre\_8  Genre\_9  
+         0      0.0      0.0      0.0      0.0      0.0      1.0      0.0  
+         1      0.0      0.0      0.0      0.0      0.0      0.0      0.0  
+         2      0.0      0.0      0.0      0.0      0.0      0.0      0.0  
+         3      0.0      0.0      0.0      0.0      0.0      0.0      0.0  
+         4      0.0      0.0      0.0      0.0      0.0      1.0      0.0  
+         
+         [5 rows x 25 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}44}]:} \PY{c+c1}{\PYZsh{} standard scaling}
+         \PY{n}{stdsc} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{X\PYZus{}std}\PY{o}{=}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{stdsc}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X0}\PY{p}{)}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{X0}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+         \PY{n}{X\PYZus{}std}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}44}]:}      Budget   Screens    Sequel  Sentiment     Views     Likes  Dislikes  \textbackslash{}
+         0 -0.810739 -1.527274 -0.372283  -0.402417 -0.096040 -0.281630 -0.204677   
+         1  0.040033  0.748123  0.663831  -0.115951 -0.695253 -0.322203 -0.497933   
+         2 -0.366858  0.445295 -0.372283  -0.402417 -0.757108 -0.431267 -0.519686   
+         3  1.149735  0.862556  0.663831  -0.402417 -0.724216 -0.358222 -0.440732   
+         4 -0.819987  0.053154  0.663831  -0.402417 -0.126025 -0.019801 -0.055632   
+         
+            Comments  Budget\_log  Screens\_log    {\ldots}     Genre\_10  Genre\_12  Genre\_15  \textbackslash{}
+         0 -0.333876   -1.135265    -1.504973    {\ldots}    -0.234082 -0.244199 -0.212718   
+         1 -0.460163    0.549579     0.609956    {\ldots}    -0.234082 -0.244199 -0.212718   
+         2 -0.499172    0.162798     0.540688    {\ldots}    -0.234082 -0.244199 -0.212718   
+         3 -0.346785    1.075538     0.633787    {\ldots}    -0.234082 -0.244199 -0.212718   
+         4 -0.208711   -1.224340     0.433504    {\ldots}    -0.234082 -0.244199 -0.212718   
+         
+             Genre\_2   Genre\_3   Genre\_4   Genre\_6   Genre\_7   Genre\_8   Genre\_9  
+         0 -0.234082 -0.498647 -0.065938 -0.114708 -0.093454  1.810463 -0.244199  
+         1 -0.234082 -0.498647 -0.065938 -0.114708 -0.093454 -0.552345 -0.244199  
+         2 -0.234082 -0.498647 -0.065938 -0.114708 -0.093454 -0.552345 -0.244199  
+         3 -0.234082 -0.498647 -0.065938 -0.114708 -0.093454 -0.552345 -0.244199  
+         4 -0.234082 -0.498647 -0.065938 -0.114708 -0.093454  1.810463 -0.244199  
+         
+         [5 rows x 25 columns]
+\end{Verbatim}
+            
+    Ratings values stored in \texttt{y1} was copied to \texttt{y} for
+modelign purposes.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{n}{y} \PY{o}{=} \PY{n}{y1}
+\end{Verbatim}
+
+
+    The number of iterations was set to 100 as coded through the seeds
+parameter from 0 to 99 below.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}46}]:} \PY{n}{seeds} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)} \PY{c+c1}{\PYZsh{} 0 to 99 excluding 100}
+\end{Verbatim}
+
+
+    \paragraph{X Min-Max Scaled}\label{x-min-max-scaled}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} \PY{n}{X} \PY{o}{=} \PY{n}{X\PYZus{}mm}
+         
+         \PY{n}{params\PYZus{}knn} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+         \PY{n}{params\PYZus{}lr\PYZus{}svd} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.0001}\PY{p}{,} \PY{l+m+mf}{0.001}\PY{p}{,} \PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]}
+         
+         \PY{n}{accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{opt\PYZus{}param} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}feats} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{n}{types} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{knn\PYZus{}reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lin\PYZus{}reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ridge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lasso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{types}\PY{p}{:}
+             \PY{k}{if} \PY{n}{t} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{knn\PYZus{}reg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                 \PY{n}{params} \PY{o}{=} \PY{n}{params\PYZus{}knn}
+                 \PY{n}{cols} \PY{o}{=} \PY{n}{ml\PYZus{}each\PYZus{}feature}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{)}
+                 \PY{n}{a}\PY{p}{,} \PY{n}{p}\PY{p}{,} \PY{n}{ind} \PY{o}{=} \PY{n}{optimize\PYZus{}feats}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cols}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,}
+                                            \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+                 
+                 \PY{n}{accuracies}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                 \PY{n}{opt\PYZus{}param}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p}\PY{p}{)}
+                 \PY{n}{num\PYZus{}feats}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{ind}\PY{p}{)}\PY{p}{)}
+                 
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{params} \PY{o}{=} \PY{n}{params\PYZus{}lr\PYZus{}svd}
+                 \PY{n}{cols} \PY{o}{=} \PY{n}{ml\PYZus{}each\PYZus{}feature}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{)}
+                 \PY{n}{a}\PY{p}{,} \PY{n}{p}\PY{p}{,} \PY{n}{ind} \PY{o}{=} \PY{n}{optimize\PYZus{}feats}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cols}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,}
+                                            \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{l+m+mi}{10000}\PY{p}{)}
+                     
+                 \PY{n}{accuracies}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                 \PY{n}{opt\PYZus{}param}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p}\PY{p}{)}
+                 \PY{n}{num\PYZus{}feats}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{ind}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_91_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.2281
+Var of accuracy at optimal parameter: 0.0126
+Optimal parameter: 8.0000
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_91_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.2026
+Var of accuracy at optimal parameter: 0.0264
+Optimal parameter: 0.0001
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_91_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.2373
+Var of accuracy at optimal parameter: 0.0128
+Optimal parameter: 0.1000
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_91_6.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.2134
+Var of accuracy at optimal parameter: 0.0185
+Optimal parameter: 0.0010
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}48}]:} \PY{n}{models} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kNN Reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Linear Reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ridge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Lasso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                            \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Machine Learning Method}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{accs} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{accuracies}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Test Accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{params} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n neighbors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Parameter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{param\PYZus{}val\PYZus{}2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{opt\PYZus{}param}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Optimal Parameter Value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{encoder} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{n}{enc}\PY{p}{]}\PY{o}{*}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Encoder}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{scaling} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Min\PYZhy{}Max}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{4}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Scaling}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{features} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{num\PYZus{}feats}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Features}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{df\PYZus{}2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{encoder}\PY{p}{,} \PY{n}{scaling}\PY{p}{,} \PY{n}{features}\PY{p}{,} \PY{n}{models}\PY{p}{,} \PY{n}{accs}\PY{p}{,}
+                           \PY{n}{params}\PY{p}{,} \PY{n}{param\PYZus{}val\PYZus{}2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}2}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+   Encoder  Scaling  Features Machine Learning Method  Test Accuracy  \
+0  One-Hot  Min-Max        10                 kNN Reg         0.2281   
+1  One-Hot  Min-Max         8              Linear Reg         0.2026   
+2  One-Hot  Min-Max        11                   Ridge         0.2373   
+3  One-Hot  Min-Max         9                   Lasso         0.2134   
+
+     Parameter  Optimal Parameter Value  
+0  n neighbors                   8.0000  
+1            C                   0.0001  
+2            C                   0.1000  
+3            C                   0.0010  
+    \end{verbatim}
+
+    
+    \paragraph{X Std Scaled}\label{x-std-scaled}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}49}]:} \PY{n}{X} \PY{o}{=} \PY{n}{X\PYZus{}std}
+         
+         \PY{n}{params\PYZus{}knn} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+         \PY{n}{params\PYZus{}lr\PYZus{}svd} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.0001}\PY{p}{,} \PY{l+m+mf}{0.001}\PY{p}{,} \PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mf}{0.05}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mf}{0.75}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{]}
+         
+         \PY{n}{accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{opt\PYZus{}param} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}feats} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{n}{types} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{knn\PYZus{}reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lin\PYZus{}reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ridge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lasso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{types}\PY{p}{:}
+             \PY{k}{if} \PY{n}{t} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{knn\PYZus{}reg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                 \PY{n}{params} \PY{o}{=} \PY{n}{params\PYZus{}knn}
+                 \PY{n}{cols} \PY{o}{=} \PY{n}{ml\PYZus{}each\PYZus{}feature}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{)}
+                 \PY{n}{a}\PY{p}{,} \PY{n}{p}\PY{p}{,} \PY{n}{ind} \PY{o}{=} \PY{n}{optimize\PYZus{}feats}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cols}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,}
+                                            \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+                 
+                 \PY{n}{accuracies}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                 \PY{n}{opt\PYZus{}param}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p}\PY{p}{)}
+                 \PY{n}{num\PYZus{}feats}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{ind}\PY{p}{)}\PY{p}{)}
+                 
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{params} \PY{o}{=} \PY{n}{params\PYZus{}lr\PYZus{}svd}
+                 \PY{n}{cols} \PY{o}{=} \PY{n}{ml\PYZus{}each\PYZus{}feature}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{)}
+                 \PY{n}{a}\PY{p}{,} \PY{n}{p}\PY{p}{,} \PY{n}{ind} \PY{o}{=} \PY{n}{optimize\PYZus{}feats}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cols}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,}
+                                            \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{l+m+mi}{10000}\PY{p}{)}
+                     
+                 \PY{n}{accuracies}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                 \PY{n}{opt\PYZus{}param}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p}\PY{p}{)}
+                 \PY{n}{num\PYZus{}feats}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{ind}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_94_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.1761
+Var of accuracy at optimal parameter: 0.0118
+Optimal parameter: 10.0000
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_94_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.2027
+Var of accuracy at optimal parameter: 0.0263
+Optimal parameter: 0.0001
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_94_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.2185
+Var of accuracy at optimal parameter: 0.0155
+Optimal parameter: 10.0000
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_94_6.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.2129
+Var of accuracy at optimal parameter: 0.0180
+Optimal parameter: 0.0100
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} \PY{n}{models} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kNN Reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Linear Reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ridge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Lasso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                            \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Machine Learning Method}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{accs} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{accuracies}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Test Accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{params} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n neighbors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Parameter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{param\PYZus{}val\PYZus{}2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{opt\PYZus{}param}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Optimal Parameter Value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{encoder} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{n}{enc}\PY{p}{]}\PY{o}{*}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Encoder}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{scaling} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Std}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{4}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Scaling}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{features} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{num\PYZus{}feats}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Features}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{df\PYZus{}3} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{encoder}\PY{p}{,} \PY{n}{scaling}\PY{p}{,} \PY{n}{features}\PY{p}{,} \PY{n}{models}\PY{p}{,} \PY{n}{accs}\PY{p}{,}
+                           \PY{n}{params}\PY{p}{,} \PY{n}{param\PYZus{}val\PYZus{}2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}3}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+   Encoder Scaling  Features Machine Learning Method  Test Accuracy  \
+0  One-Hot     Std        10                 kNN Reg         0.1761   
+1  One-Hot     Std         9              Linear Reg         0.2027   
+2  One-Hot     Std        10                   Ridge         0.2185   
+3  One-Hot     Std         9                   Lasso         0.2129   
+
+     Parameter  Optimal Parameter Value  
+0  n neighbors                  10.0000  
+1            C                   0.0001  
+2            C                  10.0000  
+3            C                   0.0100  
+    \end{verbatim}
+
+    
+    \subsubsection{Predicting Movie Ratings
+Summary}\label{predicting-movie-ratings-summary}
+
+    The table below summarizes the results of the runs above. Highest
+regression accuracy (\(r^2\)) was achieved using one-hot encoding,
+min-max scaling, ridge regression, parameter value of 0.100 and 11
+features.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} \PY{n}{df\PYZus{}all\PYZus{}1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{df\PYZus{}2}\PY{p}{,} \PY{n}{df\PYZus{}3}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{drop}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{df\PYZus{}all\PYZus{}1} \PY{o}{=} \PY{n}{df\PYZus{}all\PYZus{}1}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Test Accuracy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{drop}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{df\PYZus{}all\PYZus{}1}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}51}]:}    Encoder  Scaling  Features Machine Learning Method  Test Accuracy  \textbackslash{}
+         0  One-Hot  Min-Max        11                   Ridge         0.2373   
+         1  One-Hot  Min-Max        10                 kNN Reg         0.2281   
+         2  One-Hot      Std        10                   Ridge         0.2185   
+         3  One-Hot  Min-Max         9                   Lasso         0.2134   
+         4  One-Hot      Std         9                   Lasso         0.2129   
+         5  One-Hot      Std         9              Linear Reg         0.2027   
+         6  One-Hot  Min-Max         8              Linear Reg         0.2026   
+         7  One-Hot      Std        10                 kNN Reg         0.1761   
+         
+              Parameter  Optimal Parameter Value  
+         0            C                   0.1000  
+         1  n neighbors                   8.0000  
+         2            C                  10.0000  
+         3            C                   0.0010  
+         4            C                   0.0100  
+         5            C                   0.0001  
+         6            C                   0.0001  
+         7  n neighbors                  10.0000  
+\end{Verbatim}
+            
+    \subsubsection{Predicting Using Best
+Method}\label{predicting-using-best-method}
+
+    The selected model was rerun below.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}52}]:} \PY{n}{enc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{One\PYZhy{}Hot}\PY{l+s+s2}{\PYZdq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}53}]:} \PY{c+c1}{\PYZsh{} One\PYZhy{}hot encoding}
+         \PY{n}{df\PYZus{}cat2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{get\PYZus{}dummies}\PY{p}{(}\PY{n}{df\PYZus{}cat}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{str}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{drop\PYZus{}first}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}54}]:} \PY{n}{X0} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{df\PYZus{}num\PYZus{}targ1}\PY{p}{,} \PY{n}{df\PYZus{}cat2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Ratings}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{conv\PYZus{}to\PYZus{}numeric}\PY{p}{(}\PY{n}{X0}\PY{p}{,} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{X0}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No. of columns that must be changed to numerical: 25
+No. of columns automatically changed to numbers, 1st pass: 25
+
+Remaining columns with values that must be changed to numbers:
+All values numerical already.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}55}]:} \PY{c+c1}{\PYZsh{} min\PYZhy{}max scaling}
+         \PY{n}{mms} \PY{o}{=} \PY{n}{MinMaxScaler}\PY{p}{(}\PY{p}{)}
+         \PY{n}{X\PYZus{}mm} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{mms}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X0}\PY{p}{)}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{X0}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}56}]:} \PY{n}{X} \PY{o}{=} \PY{n}{X\PYZus{}mm}
+         
+         \PY{n}{params} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.0001}\PY{p}{,} \PY{l+m+mf}{0.001}\PY{p}{,} \PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]}
+         
+         \PY{n}{accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{opt\PYZus{}param} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}feats} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{n}{t} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ridge}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{cols} \PY{o}{=} \PY{n}{ml\PYZus{}each\PYZus{}feature}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{)}
+         \PY{n}{a}\PY{p}{,} \PY{n}{p}\PY{p}{,} \PY{n}{ind} \PY{o}{=} \PY{n}{optimize\PYZus{}feats}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cols}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,}
+                                            \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{l+m+mi}{10000}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_105_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.2373
+Var of accuracy at optimal parameter: 0.0128
+Optimal parameter: 0.1000
+Total iterations: 100
+
+    \end{Verbatim}
+
+    The chart below shows the 11 features used. The number of likes is the
+top predictor, correlating positively with ratings. Comments and
+dislikes are the next two predictors, correlating negatively with
+ratings.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}57}]:} \PY{n}{ml} \PY{o}{=} \PY{n}{ML\PYZus{}Regressor}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ml}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{n}{cols}\PY{p}{[}\PY{n}{ind}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{ml\PYZus{}type}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{param\PYZus{}range}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seed\PYZus{}settings}\PY{o}{=}\PY{n}{seeds}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{cols}\PY{p}{[}\PY{n}{ind}\PY{p}{]}\PY{p}{,} \PY{n}{ml}\PY{o}{.}\PY{n}{coefs\PYZus{}all}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Top features and corresponding coefficients}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{rotation}\PY{o}{=}\PY{l+m+mi}{90}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_107_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Predicting Gross Income}\label{predicting-gross-income}
+
+    K Nearest Neighbors Regression, Linear Regression, Ridge Regression, and
+Lasso Regression were the four regression algorithms used to predict
+Movie \texttt{Gross\ Income}. Naturally, \texttt{Ratings} and
+\texttt{Gross\ Income}, the two variables being predicted, were removed
+from the features. The results were compared with each other and the
+algorithm that yields the highest "accuracy" measured in \(r^2\) was
+identified.
+
+    \subsubsection{Scaling}\label{scaling}
+
+    Two scaling methods were used: min-max scaling or standard scaling.
+Min-max scaling scales the values in a column by the range of values in
+that column (minimum values to maximum values). Standard scaling scales
+the values in a column by the mean and standard deviation of the values
+in that column.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}58}]:} \PY{c+c1}{\PYZsh{} min\PYZhy{}max scaling}
+         \PY{n}{mms} \PY{o}{=} \PY{n}{MinMaxScaler}\PY{p}{(}\PY{p}{)}
+         \PY{n}{X\PYZus{}mm} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{mms}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X0}\PY{p}{)}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{X0}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}59}]:} \PY{c+c1}{\PYZsh{} standard scaling}
+         \PY{n}{stdsc} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{X\PYZus{}std}\PY{o}{=}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{stdsc}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X0}\PY{p}{)}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{X0}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+\end{Verbatim}
+
+
+    Ratings values stored in \texttt{y2} was copied to \texttt{y} for
+modeling purposes.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}60}]:} \PY{n}{y} \PY{o}{=} \PY{p}{(}\PY{n}{y2}\PY{p}{)}
+\end{Verbatim}
+
+
+    \paragraph{X Min-Max Scaled}\label{x-min-max-scaled}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}61}]:} \PY{n}{X} \PY{o}{=} \PY{n}{X\PYZus{}mm}
+         
+         \PY{n}{params\PYZus{}knn} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+         \PY{n}{params\PYZus{}lr\PYZus{}svd} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.0001}\PY{p}{,} \PY{l+m+mf}{0.001}\PY{p}{,} \PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{]}
+         
+         \PY{n}{accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{opt\PYZus{}param} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}feats} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{n}{types} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{knn\PYZus{}reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lin\PYZus{}reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ridge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lasso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{types}\PY{p}{:}
+             \PY{k}{if} \PY{n}{t} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{knn\PYZus{}reg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                 \PY{n}{params} \PY{o}{=} \PY{n}{params\PYZus{}knn}
+                 \PY{n}{cols} \PY{o}{=} \PY{n}{ml\PYZus{}each\PYZus{}feature}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{)}
+                 \PY{n}{a}\PY{p}{,} \PY{n}{p}\PY{p}{,} \PY{n}{ind} \PY{o}{=} \PY{n}{optimize\PYZus{}feats}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cols}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,}
+                                            \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+                 
+                 \PY{n}{accuracies}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                 \PY{n}{opt\PYZus{}param}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p}\PY{p}{)}
+                 \PY{n}{num\PYZus{}feats}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{ind}\PY{p}{)}\PY{p}{)}
+                 
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{params} \PY{o}{=} \PY{n}{params\PYZus{}lr\PYZus{}svd}
+                 \PY{n}{cols} \PY{o}{=} \PY{n}{ml\PYZus{}each\PYZus{}feature}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{)}
+                 \PY{n}{a}\PY{p}{,} \PY{n}{p}\PY{p}{,} \PY{n}{ind} \PY{o}{=} \PY{n}{optimize\PYZus{}feats}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cols}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,}
+                                            \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{l+m+mi}{10000}\PY{p}{)}
+                     
+                 \PY{n}{accuracies}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                 \PY{n}{opt\PYZus{}param}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p}\PY{p}{)}
+                 \PY{n}{num\PYZus{}feats}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{ind}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_117_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.6171
+Var of accuracy at optimal parameter: 0.0117
+Optimal parameter: 9.0000
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_117_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.5436
+Var of accuracy at optimal parameter: 0.0122
+Optimal parameter: 0.0001
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_117_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.5488
+Var of accuracy at optimal parameter: 0.0092
+Optimal parameter: 1.0000
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_117_6.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.5437
+Var of accuracy at optimal parameter: 0.0122
+Optimal parameter: 1000.0000
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}62}]:} \PY{n}{models} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kNN Reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Linear Reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ridge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Lasso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                            \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Machine Learning Method}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{accs} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{accuracies}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Test Accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{params} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n neighbors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Parameter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{param\PYZus{}val\PYZus{}2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{opt\PYZus{}param}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Optimal Parameter Value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{encoder} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{n}{enc}\PY{p}{]}\PY{o}{*}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Encoder}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{scaling} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Min\PYZhy{}Max}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{4}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Scaling}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{features} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{num\PYZus{}feats}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Features}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{df\PYZus{}22} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{encoder}\PY{p}{,} \PY{n}{scaling}\PY{p}{,} \PY{n}{features}\PY{p}{,} \PY{n}{models}\PY{p}{,} \PY{n}{accs}\PY{p}{,}
+                           \PY{n}{params}\PY{p}{,} \PY{n}{param\PYZus{}val\PYZus{}2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}22}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+   Encoder  Scaling  Features Machine Learning Method  Test Accuracy  \
+0  One-Hot  Min-Max         8                 kNN Reg         0.6171   
+1  One-Hot  Min-Max         5              Linear Reg         0.5436   
+2  One-Hot  Min-Max         7                   Ridge         0.5488   
+3  One-Hot  Min-Max         5                   Lasso         0.5437   
+
+     Parameter  Optimal Parameter Value  
+0  n neighbors                   9.0000  
+1            C                   0.0001  
+2            C                   1.0000  
+3            C                1000.0000  
+    \end{verbatim}
+
+    
+    \paragraph{X Std Scaled}\label{x-std-scaled}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}63}]:} \PY{n}{X} \PY{o}{=} \PY{n}{X\PYZus{}std}
+         
+         \PY{n}{params\PYZus{}knn} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+         \PY{n}{params\PYZus{}lr\PYZus{}svd} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.0001}\PY{p}{,} \PY{l+m+mf}{0.001}\PY{p}{,} \PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mf}{0.05}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mf}{0.75}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{]}
+         
+         \PY{n}{accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{opt\PYZus{}param} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}feats} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{n}{types} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{knn\PYZus{}reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lin\PYZus{}reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ridge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lasso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{types}\PY{p}{:}
+             \PY{k}{if} \PY{n}{t} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{knn\PYZus{}reg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                 \PY{n}{params} \PY{o}{=} \PY{n}{params\PYZus{}knn}
+                 \PY{n}{cols} \PY{o}{=} \PY{n}{ml\PYZus{}each\PYZus{}feature}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{)}
+                 \PY{n}{a}\PY{p}{,} \PY{n}{p}\PY{p}{,} \PY{n}{ind} \PY{o}{=} \PY{n}{optimize\PYZus{}feats}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cols}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,}
+                                            \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+                 
+                 \PY{n}{accuracies}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                 \PY{n}{opt\PYZus{}param}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p}\PY{p}{)}
+                 \PY{n}{num\PYZus{}feats}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{ind}\PY{p}{)}\PY{p}{)}
+                 
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{params} \PY{o}{=} \PY{n}{params\PYZus{}lr\PYZus{}svd}
+                 \PY{n}{cols} \PY{o}{=} \PY{n}{ml\PYZus{}each\PYZus{}feature}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{)}
+                 \PY{n}{a}\PY{p}{,} \PY{n}{p}\PY{p}{,} \PY{n}{ind} \PY{o}{=} \PY{n}{optimize\PYZus{}feats}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cols}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,}
+                                            \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{l+m+mi}{10000}\PY{p}{)}
+                     
+                 \PY{n}{accuracies}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                 \PY{n}{opt\PYZus{}param}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p}\PY{p}{)}
+                 \PY{n}{num\PYZus{}feats}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{ind}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_120_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.6196
+Var of accuracy at optimal parameter: 0.0118
+Optimal parameter: 11.0000
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_120_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.5436
+Var of accuracy at optimal parameter: 0.0122
+Optimal parameter: 0.0001
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_120_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.5482
+Var of accuracy at optimal parameter: 0.0101
+Optimal parameter: 10.0000
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_120_6.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.5436
+Var of accuracy at optimal parameter: 0.0122
+Optimal parameter: 1000.0000
+Total iterations: 100
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}64}]:} \PY{n}{models} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kNN Reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Linear Reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ridge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Lasso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                            \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Machine Learning Method}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{accs} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{accuracies}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Test Accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{params} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n neighbors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Parameter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{param\PYZus{}val\PYZus{}2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{opt\PYZus{}param}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Optimal Parameter Value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{encoder} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{n}{enc}\PY{p}{]}\PY{o}{*}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Encoder}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{scaling} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Std}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{4}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Scaling}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{features} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{num\PYZus{}feats}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Features}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{df\PYZus{}23} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{encoder}\PY{p}{,} \PY{n}{scaling}\PY{p}{,} \PY{n}{features}\PY{p}{,} \PY{n}{models}\PY{p}{,} \PY{n}{accs}\PY{p}{,}
+                           \PY{n}{params}\PY{p}{,} \PY{n}{param\PYZus{}val\PYZus{}2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}23}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+   Encoder Scaling  Features Machine Learning Method  Test Accuracy  \
+0  One-Hot     Std         5                 kNN Reg         0.6196   
+1  One-Hot     Std         5              Linear Reg         0.5436   
+2  One-Hot     Std         6                   Ridge         0.5482   
+3  One-Hot     Std         5                   Lasso         0.5436   
+
+     Parameter  Optimal Parameter Value  
+0  n neighbors                  11.0000  
+1            C                   0.0001  
+2            C                  10.0000  
+3            C                1000.0000  
+    \end{verbatim}
+
+    
+    \subsubsection{Predicting Gross Income
+Summary}\label{predicting-gross-income-summary}
+
+    The table below summarizes the results of the runs above. Highest
+regression accuracy (\(r^2\)) was achieved using one-hot encoding,
+min-max scaling, ridge regression, parameter value of 0.100 and 12
+features.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}65}]:} \PY{n}{df\PYZus{}all\PYZus{}2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{df\PYZus{}22}\PY{p}{,} \PY{n}{df\PYZus{}23}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{drop}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{df\PYZus{}all\PYZus{}2} \PY{o}{=} \PY{n}{df\PYZus{}all\PYZus{}2}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Test Accuracy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{drop}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{df\PYZus{}all\PYZus{}2}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}65}]:}    Encoder  Scaling  Features Machine Learning Method  Test Accuracy  \textbackslash{}
+         0  One-Hot      Std         5                 kNN Reg         0.6196   
+         1  One-Hot  Min-Max         8                 kNN Reg         0.6171   
+         2  One-Hot  Min-Max         7                   Ridge         0.5488   
+         3  One-Hot      Std         6                   Ridge         0.5482   
+         4  One-Hot  Min-Max         5                   Lasso         0.5437   
+         5  One-Hot  Min-Max         5              Linear Reg         0.5436   
+         6  One-Hot      Std         5              Linear Reg         0.5436   
+         7  One-Hot      Std         5                   Lasso         0.5436   
+         
+              Parameter  Optimal Parameter Value  
+         0  n neighbors                  11.0000  
+         1  n neighbors                   9.0000  
+         2            C                   1.0000  
+         3            C                  10.0000  
+         4            C                1000.0000  
+         5            C                   0.0001  
+         6            C                   0.0001  
+         7            C                1000.0000  
+\end{Verbatim}
+            
+    \subsubsection{Predicting Using Best
+Method}\label{predicting-using-best-method}
+
+    The selected model was rerun below.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}66}]:} \PY{n}{enc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{One\PYZhy{}Hot}\PY{l+s+s2}{\PYZdq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}67}]:} \PY{c+c1}{\PYZsh{} One\PYZhy{}hot encoding}
+         \PY{n}{df\PYZus{}cat2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{get\PYZus{}dummies}\PY{p}{(}\PY{n}{df\PYZus{}cat}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{str}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{drop\PYZus{}first}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}68}]:} \PY{n}{X0} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{df\PYZus{}num\PYZus{}targ1}\PY{p}{,} \PY{n}{df\PYZus{}cat2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Ratings}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{conv\PYZus{}to\PYZus{}numeric}\PY{p}{(}\PY{n}{X0}\PY{p}{,} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{X0}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No. of columns that must be changed to numerical: 25
+No. of columns automatically changed to numbers, 1st pass: 25
+
+Remaining columns with values that must be changed to numbers:
+All values numerical already.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}69}]:} \PY{c+c1}{\PYZsh{} min\PYZhy{}max scaling}
+         \PY{n}{X\PYZus{}std} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{stdsc}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X0}\PY{p}{)}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{X0}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}70}]:} \PY{n}{X} \PY{o}{=} \PY{n}{X\PYZus{}std}
+         
+         \PY{n}{params} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+         
+         \PY{n}{accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{opt\PYZus{}param} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}feats} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{n}{t} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{knn\PYZus{}reg}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{cols} \PY{o}{=} \PY{n}{ml\PYZus{}each\PYZus{}feature}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,} \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{)}
+         \PY{n}{a}\PY{p}{,} \PY{n}{p}\PY{p}{,} \PY{n}{ind} \PY{o}{=} \PY{n}{optimize\PYZus{}feats}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cols}\PY{p}{,} \PY{n}{t}\PY{o}{=}\PY{n}{t}\PY{p}{,} \PY{n}{params}\PY{o}{=}\PY{n}{params}\PY{p}{,}
+                                            \PY{n}{seeds}\PY{o}{=}\PY{n}{seeds}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_131_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Report:
+=======
+Max average accuracy: 0.6196
+Var of accuracy at optimal parameter: 0.0118
+Optimal parameter: 11.0000
+Total iterations: 100
+
+    \end{Verbatim}
+
+    The four features used are \texttt{Screens\_log}, \texttt{Screens},
+\texttt{Genre\_12}, \texttt{Genre\_7}, and\texttt{Genre\_6}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}71}]:} \PY{n}{cols}\PY{p}{[}\PY{n}{ind}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}71}]:} array(['Screens\_log', 'Screens', 'Genre\_12', 'Genre\_7', 'Genre\_6'],
+               dtype=object)
+\end{Verbatim}
+            
+    \subsection{Summary}\label{summary}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}72}]:} \PY{n}{df\PYZus{}best} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{df\PYZus{}all\PYZus{}1}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{df\PYZus{}all\PYZus{}2}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+         \PY{n}{df\PYZus{}best}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}72}]:}    Encoder  Scaling  Features Machine Learning Method  Test Accuracy  \textbackslash{}
+         0  One-Hot  Min-Max        11                   Ridge         0.2373   
+         0  One-Hot      Std         5                 kNN Reg         0.6196   
+         
+              Parameter  Optimal Parameter Value  
+         0            C                      0.1  
+         0  n neighbors                     11.0  
+\end{Verbatim}
+            
+    Various combinations of categorical data encoding, features scaling, and
+regression algorithms were run on a movies dataset prepared by Mehreen
+Ahmed of the National University of Sciences and Technology (NUST),
+Pakistan. The goal was to predict the gross income and rating based on
+features sourced from IMDB, Youtube, and Twitter.
+
+23.73\% was the highest coefficient of determination \(r^2\) achieved
+when predicting movie ratings. The regression algorithm used is Ridge
+Regression with parameter \(\alpha = 0.1\). One-hot encoding was applied
+on the genre feature, and min-max scaling was applied on each of the
+feature. A total of 11 features were used namely: 1. Likes * Dislikes *
+Comments * Views * Budget * Genre\_7 * Genre\_15 * Genre\_9 *
+Screens\_log * Sentiment * Sequel\_log
+
+The number of likes on the movie trailer on Youtube is the feature with
+the largest positive coefficent. The number of comments on Youtube
+trailers has the largest negative coefficient, followed closely by the
+number of dislikes.
+
+When predicting gross income, the highest \(r^2\) of 61.96\% was
+achieved using kNN Regression using 11 neighbors. One-hot encoding was
+applied on the genre feature, and standard scaling was applied on each
+of the feature. A total of five features were used namely: 1.
+Screens\_log * Screens * Genre\_12 * Genre\_7 * Genre\_6
+
+    \subsection{Limitations and Avenues for Further
+Research}\label{limitations-and-avenues-for-further-research}
+
+    The dataset used only spanned from 2014 to 2015, and only used Twitter
+and Youtube data. Further studies could explore to expand to capture
+more years as well as more video and social media sites. Feature
+engineering may also improve accuracy in the future.
+
+    \subsection{References and
+Acknowledgements}\label{references-and-acknowledgements}
+
+    I would like to acknowledge Prof. Monterola, Prof. Legara, and the rest
+of AIM Access lab Professors and lab team.
+
+Data was sourced from
+https://archive.ics.uci.edu/ml/datasets/CSM+\%28Conventional+and+Social+Media+Movies\%29+Dataset+2014+and+2015
+
+Ahmed M, Jahangir M, Afzal H, Majeed A, Siddiqi I. Using Crowd-source
+based features from social media and Conventional features to predict
+the movies popularity. InSmart City/SocialCom/SustainCom (SmartCity),
+2015 IEEE International Conference on 2015 Dec 19 (pp. 273-278). IEEE.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
